@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/node_modules/react/dist/react.js"></script>
+    <script src="/node_modules/kissy/build/modulex-debug.js"></script>
+</head>
+<body>
+<script>
+    require.config('packages',{
+       test:{
+           base:'./'
+       }
+    });
+    require(['test/init']);
+</script>
+</body>
+</html>

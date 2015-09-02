@@ -1,0 +1,45 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/iojs/2.3.4/bin/iojs',
+1 verbose cli   '/usr/local/lib/node_modules/tnpm/node_modules/.bin/ali-npm',
+1 verbose cli   '--no-proxy',
+1 verbose cli   '--disturl=http://npm.taobao.org/mirrors/iojs',
+1 verbose cli   '--userconfig=/Users/yixuan/.tnpmrc',
+1 verbose cli   '--registry=http://registry.npm.alibaba-inc.com',
+1 verbose cli   '--node-gyp=/usr/local/lib/node_modules/tnpm/node_modules/pangyp/bin/node-gyp.js',
+1 verbose cli   '--cache=/Users/yixuan/.tnpm',
+1 verbose cli   'start' ]
+2 info using npm@2.2.5
+3 info using node@v2.3.4
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info prestart first-react@1.0.0
+6 info start first-react@1.0.0
+7 verbose unsafe-perm in lifecycle true
+8 info first-react@1.0.0 Failed to exec start script
+9 verbose stack Error: first-react@1.0.0 start: `node --harmony server`
+9 verbose stack Exit status 1
+9 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/tnpm/node_modules/ali-npm/lib/utils/lifecycle.js:214:16)
+9 verbose stack     at emitTwo (events.js:87:13)
+9 verbose stack     at EventEmitter.emit (events.js:172:7)
+9 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/tnpm/node_modules/ali-npm/lib/utils/spawn.js:24:14)
+9 verbose stack     at emitTwo (events.js:87:13)
+9 verbose stack     at ChildProcess.emit (events.js:172:7)
+9 verbose stack     at maybeClose (internal/child_process.js:764:16)
+9 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+10 verbose pkgid first-react@1.0.0
+11 verbose cwd /Users/yixuan/project/React-Learning/first-react
+12 error Darwin 14.3.0
+13 error argv "/usr/local/Cellar/iojs/2.3.4/bin/iojs" "/usr/local/lib/node_modules/tnpm/node_modules/.bin/ali-npm" "--no-proxy" "--disturl=http://npm.taobao.org/mirrors/iojs" "--userconfig=/Users/yixuan/.tnpmrc" "--registry=http://registry.npm.alibaba-inc.com" "--node-gyp=/usr/local/lib/node_modules/tnpm/node_modules/pangyp/bin/node-gyp.js" "--cache=/Users/yixuan/.tnpm" "start"
+14 error node v2.3.4
+15 error npm  v2.2.5
+16 error code ELIFECYCLE
+17 error first-react@1.0.0 start: `node --harmony server`
+17 error Exit status 1
+18 error Failed at the first-react@1.0.0 start script 'node --harmony server'.
+18 error This is most likely a problem with the first-react package,
+18 error not with npm itself.
+18 error Tell the author that this fails on your system:
+18 error     node --harmony server
+18 error You can get their info via:
+18 error     npm owner ls first-react
+18 error There is likely additional logging output above.
+19 verbose exit [ 1, true ]
