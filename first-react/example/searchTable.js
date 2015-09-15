@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
-    <script src="./build/react.js"></script>
-    <script type="text/javascript" src="./build/browser.min.js"></script>
-  </head>
-  <body>
-    <!-- <a href="http://reactjs.cn/react/docs/thinking-in-react.html">使用React的思考方式将应用拆分成组件</a> -->
-    <div id="example"></div>
-    <script type="text/babel">
-      var ProductCategoryRow = React.createClass({
+/** @jsx React.DOM */
+var ProductCategoryRow = React.createClass({
     render: function() {
         return (<tr><th colSpan="2">{this.props.category}</th></tr>);
     }
@@ -71,7 +61,8 @@ var SearchBar = React.createClass({
     }
 });
 
-var FilterableProductTable = React.createClass({
+
+module.exports = React.createClass({
     render: function() {
         return (
             <div>
@@ -83,16 +74,3 @@ var FilterableProductTable = React.createClass({
 });
 
 
-var PRODUCTS = [
-  {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
-  {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'},
-  {category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball'},
-  {category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch'},
-  {category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5'},
-  {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'}
-];
-
-React.render(<FilterableProductTable products={PRODUCTS} />, document.body);
-    </script>
-  </body>
-</html>
