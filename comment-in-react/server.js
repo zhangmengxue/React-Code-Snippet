@@ -1,10 +1,11 @@
 var koa = require('koa');
 var serve = require('koa-static');
-var app = koa();
 var path = require('path');
 var cwd = __dirname;
 var serveIndex = require('koa-serve-index');
 var fs = require('fs');
+var router = require('koa-router')();
+var app = koa();
 
 app.use(serveIndex(cwd,{
   hidden:true,
@@ -26,17 +27,10 @@ app.use(serve(cwd,{
   hidden:true
 }));
 
-app.post('/comment/test.json', function(req, res) {
-  fs.readFile('/comment/test.json', function(err, data) {
-    var comments = JSON.parse(data);
-    comments.push(req.body);
-    fs.writeFile('/comment/test.json', JSON.stringify(comments, null, 4), function(err) {
-      res.setHeader('Cache-Control', 'no-cache');
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.json(comments);
-    });
-  });
+router.post('/comment/test.json',function *(next){
+
 });
+
 
 app.listen(8000);
 console.log('server start at '+ 8000);

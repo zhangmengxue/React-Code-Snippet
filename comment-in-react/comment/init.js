@@ -91,6 +91,7 @@ var CommentBox = React.createClass({
   // },
   //post请求可能会有一些问题[完整示例在这里](https://github.com/reactjs/react-tutorial)
   handleCommentSubmit:function(comment){
+    console.log(JSON.stringify(comment));
      $.ajax({
       url: this.props.url,
       dataType: 'json',
