@@ -67,6 +67,8 @@ var SearchBar = React.createClass({
                 <input type="text" placeholder="Search..." value={this.props.filterText} ref="filterTextInput" onChange={this.handleChange} />
                 <p>
                     <input type="checkbox" checked={this.props.inStockOnly} ref="inStockOnlyInput" onChange={this.handleChange}/>
+                    {' '}
+                    filter
                 </p>
             </form>
         );
