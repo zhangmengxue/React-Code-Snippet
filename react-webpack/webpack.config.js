@@ -5,7 +5,7 @@ module.exports = {
       "./js/app.js"
     ],
     output: {
-        path: __dirname + '/build',
+        path: './build',
         filename: "bundle.js"
     },
     module: {
@@ -15,8 +15,10 @@ module.exports = {
             { test: /\.css$/, loader: "style!css" }
         ]
     },
+    resolve:{
+        extensions:['','.js','.json']
+    },
     plugins: [
       new webpack.NoErrorsPlugin()
     ]
-
 };
