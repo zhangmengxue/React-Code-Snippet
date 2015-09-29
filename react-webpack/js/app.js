@@ -5,6 +5,7 @@ import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
 import HelloHandler from './hello.js';
 import Forms from './form.js';
 import Timer from './timer.js';
+import Menu from './menu.js';
 
 let App = React.createClass({
   render() {
@@ -16,6 +17,7 @@ let App = React.createClass({
         {/* this is the importTant part */}
         <RouteHandler/>
         <Timer start={Date.now()} />
+        <Menu items={['Home','About','Contect']} />
       </div>
     );
   }
