@@ -1,6 +1,6 @@
 ###React-Learning
 -----------------------------
-```Project:```
+**Project:**
 
 **[/first-react](https://github.com/zhangmengxue/React-Learning/tree/master/first-react)**
 
@@ -13,7 +13,7 @@
 
     React-Webpack-ES6开发模式，里面包含很多结合使用ES6和React的小例子。也是[React+Webpack+ES6开发模式入门指南](http://www.cnblogs.com/skylar/p/React-Webpack-ES6.html)这篇文章的实例
 
-```Resources:```
+**Resources:**
 
 - [使用React和Flux创建一个记事本应用](http://zhuanlan.zhihu.com/FrontendMagazine/19934725)
 - [深入浅出React-Webpack](http://www.infoq.com/cn/articles/react-and-webpack)
