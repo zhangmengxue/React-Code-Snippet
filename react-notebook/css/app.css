@@ -1,0 +1,13 @@
+.top-buffer{
+    /*margin-top:30px;*/
+}
+.centered{
+    text-align:center;
+}
+
+.header{
+    background: #f2f2f2;
+    margin-bottom: 30px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
