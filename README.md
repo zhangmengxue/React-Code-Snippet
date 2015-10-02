@@ -1,7 +1,7 @@
 ###React-Learning
 -----------------------------
 
-```[React+Webpack+ES6开发模式脚手架](https://www.npmjs.com/package/generator-reactpack)```
+[React+Webpack+ES6开发模式脚手架](https://www.npmjs.com/package/generator-reactpack)是我给自己写的脚手架，用于日常的开发。除非特殊说明，一般下列项目都是使用这种模式开发的。
 
 **Project:**
 
@@ -12,9 +12,14 @@
 **[/comment-in-react](https://github.com/zhangmengxue/React-Learning/tree/master/comment-in-react)**
 
 实现的React官方的入门例子，commentbox
+
 **[/react-webpack](https://github.com/zhangmengxue/React-Learning/tree/master/react-webpack)**
 
 React-Webpack-ES6开发模式，里面包含很多结合使用ES6和React的小例子。也是[React+Webpack+ES6开发模式入门指南](http://www.cnblogs.com/skylar/p/React-Webpack-ES6.html)这篇文章的实例
+
+**[/react-notebook](https://github.com/zhangmengxue/React-Learning/tree/master/react-notebook)**
+
+基于React reflux的记事本应用完整app。
 
 **Resources:**
 
