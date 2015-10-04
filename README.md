@@ -22,6 +22,10 @@
 
   - 基于React reflux的记事本应用完整app。
 
+**[/simple-flux](https://github.com/zhangmengxue/React-Learning/tree/master/simple-flux)**
+
+  - flux入门实例，理解flux。flux-for-stupid-people这篇文章的实例[flux-for-stupid-people-demo](https://github.com/ruanyf/flux-for-stupid-people-demo)
+
 **Resources:**
 
 - [使用React和Flux创建一个记事本应用](http://zhuanlan.zhihu.com/FrontendMagazine/19934725)
