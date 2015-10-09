@@ -20,7 +20,9 @@ let App = React.createClass({
         <Menu items={['Home','About','Contect']} />
       </div>
     );
-  }
+
+      <div>Hello world!</div>
+    );  }
 });
 
 let routes = (
@@ -33,3 +35,4 @@ let routes = (
 Router.run(routes, function (Handler) {
   React.render(<Handler />, document.body);
 });
+
