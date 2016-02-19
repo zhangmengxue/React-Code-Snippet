@@ -14,23 +14,29 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _BootstrapMixin = require('./BootstrapMixin');
+var _utilsBootstrapUtils = require('./utils/bootstrapUtils');
 
-var _BootstrapMixin2 = _interopRequireDefault(_BootstrapMixin);
+var _utilsBootstrapUtils2 = _interopRequireDefault(_utilsBootstrapUtils);
+
+var _Button = require('./Button');
+
+var _Button2 = _interopRequireDefault(_Button);
 
 var ButtonToolbar = _react2['default'].createClass({
   displayName: 'ButtonToolbar',
 
-  mixins: [_BootstrapMixin2['default']],
+  propTypes: {
+    bsSize: _Button2['default'].propTypes.bsSize
+  },
 
   getDefaultProps: function getDefaultProps() {
     return {
-      bsClass: 'button-toolbar'
+      bsClass: 'btn-toolbar'
     };
   },
 
   render: function render() {
-    var classes = this.getBsClassSet();
+    var classes = _utilsBootstrapUtils2['default'].getClassSet(this.props);
 
     return _react2['default'].createElement(
       'div',

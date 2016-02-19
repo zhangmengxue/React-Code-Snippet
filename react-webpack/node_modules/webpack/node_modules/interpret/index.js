@@ -69,8 +69,8 @@ const extensions = {
       module.install();
     }
   },
-  '.ts': ['typescript-node/register', 'typescript-register', 'typescript-require'],
-  '.tsx': ['typescript-node/register'],
+  '.ts': ['ts-node/register', 'typescript-node/register', 'typescript-register', 'typescript-require'],
+  '.tsx': ['ts-node/register', 'typescript-node/register'],
   '.wisp': 'wisp/engine/node',
   '.xml': 'require-xml',
   '.yaml': 'require-yaml',

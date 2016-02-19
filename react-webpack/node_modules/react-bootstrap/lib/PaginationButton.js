@@ -1,8 +1,8 @@
 'use strict';
 
-var _extends = require('babel-runtime/helpers/extends')['default'];
-
 var _objectWithoutProperties = require('babel-runtime/helpers/object-without-properties')['default'];
+
+var _extends = require('babel-runtime/helpers/extends')['default'];
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
@@ -16,22 +16,16 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _BootstrapMixin = require('./BootstrapMixin');
-
-var _BootstrapMixin2 = _interopRequireDefault(_BootstrapMixin);
-
 var _utilsCreateSelectedEvent = require('./utils/createSelectedEvent');
 
 var _utilsCreateSelectedEvent2 = _interopRequireDefault(_utilsCreateSelectedEvent);
 
-var _utilsCustomPropTypes = require('./utils/CustomPropTypes');
+var _reactPropTypesLibElementType = require('react-prop-types/lib/elementType');
 
-var _utilsCustomPropTypes2 = _interopRequireDefault(_utilsCustomPropTypes);
+var _reactPropTypesLibElementType2 = _interopRequireDefault(_reactPropTypesLibElementType);
 
 var PaginationButton = _react2['default'].createClass({
   displayName: 'PaginationButton',
-
-  mixins: [_BootstrapMixin2['default']],
 
   propTypes: {
     className: _react2['default'].PropTypes.string,
@@ -42,7 +36,7 @@ var PaginationButton = _react2['default'].createClass({
     /**
      * You can use a custom element for this component
      */
-    buttonComponentClass: _utilsCustomPropTypes2['default'].elementType
+    buttonComponentClass: _reactPropTypesLibElementType2['default']
   },
 
   getDefaultProps: function getDefaultProps() {
@@ -64,10 +58,10 @@ var PaginationButton = _react2['default'].createClass({
   },
 
   render: function render() {
-    var classes = _extends({
+    var classes = {
       active: this.props.active,
       disabled: this.props.disabled
-    }, this.getBsClassSet());
+    };
 
     var _props = this.props;
     var className = _props.className;

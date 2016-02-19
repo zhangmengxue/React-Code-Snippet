@@ -1,9 +1,10 @@
 // 20.2.2.18 Math.imul(x, y)
-var $def = require('./$.def');
+var $export = require('./$.export')
+  , $imul   = Math.imul;
 
-// WebKit fails with big numbers
-$def($def.S + $def.F * require('./$.fails')(function(){
-  return Math.imul(0xffffffff, 5) != -5;
+// some WebKit versions fails with big numbers, some has wrong arity
+$export($export.S + $export.F * require('./$.fails')(function(){
+  return $imul(0xffffffff, 5) != -5 || $imul.length != 2;
 }), 'Math', {
   imul: function imul(x, y){
     var UINT16 = 0xffff

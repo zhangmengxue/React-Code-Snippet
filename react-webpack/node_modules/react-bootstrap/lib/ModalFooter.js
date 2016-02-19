@@ -18,6 +18,10 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _utilsBootstrapUtils = require('./utils/bootstrapUtils');
+
+var _utilsBootstrapUtils2 = _interopRequireDefault(_utilsBootstrapUtils);
+
 var ModalFooter = (function (_React$Component) {
   _inherits(ModalFooter, _React$Component);
 
@@ -31,7 +35,7 @@ var ModalFooter = (function (_React$Component) {
     return _react2['default'].createElement(
       'div',
       _extends({}, this.props, {
-        className: _classnames2['default'](this.props.className, this.props.modalClassName) }),
+        className: _classnames2['default'](this.props.className, _utilsBootstrapUtils2['default'].prefix(this.props, 'footer')) }),
       this.props.children
     );
   };
@@ -43,12 +47,12 @@ ModalFooter.propTypes = {
   /**
    * A css class applied to the Component
    */
-  modalClassName: _react2['default'].PropTypes.string
+  bsClass: _react2['default'].PropTypes.string
 };
 
 ModalFooter.defaultProps = {
-  modalClassName: 'modal-footer'
+  bsClass: 'modal'
 };
 
-exports['default'] = ModalFooter;
+exports['default'] = _utilsBootstrapUtils.bsClass('modal', ModalFooter);
 module.exports = exports['default'];

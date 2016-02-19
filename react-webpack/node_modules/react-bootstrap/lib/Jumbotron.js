@@ -14,9 +14,9 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _utilsCustomPropTypes = require('./utils/CustomPropTypes');
+var _reactPropTypesLibElementType = require('react-prop-types/lib/elementType');
 
-var _utilsCustomPropTypes2 = _interopRequireDefault(_utilsCustomPropTypes);
+var _reactPropTypesLibElementType2 = _interopRequireDefault(_reactPropTypesLibElementType);
 
 var Jumbotron = _react2['default'].createClass({
   displayName: 'Jumbotron',
@@ -25,7 +25,7 @@ var Jumbotron = _react2['default'].createClass({
     /**
      * You can use a custom element for this component
      */
-    componentClass: _utilsCustomPropTypes2['default'].elementType
+    componentClass: _reactPropTypesLibElementType2['default']
   },
 
   getDefaultProps: function getDefaultProps() {

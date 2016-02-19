@@ -29,7 +29,8 @@ function set(component, propName, handler, value, args) {
     _reactLibReactUpdates2['default'].asap(function () {
       if (component.isMounted() && component._needsUpdate) {
         component._needsUpdate = false;
-        component.forceUpdate();
+
+        if (component.isMounted()) component.forceUpdate();
       }
     });
   });

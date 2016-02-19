@@ -1,3 +1,7 @@
+v0.6.6:
+  date: 2015-09-21
+  changes:
+    - add support for ts-node (formerly typescript-node)
 v0.6.5:
   date: 2015-07-22
   changes:

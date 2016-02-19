@@ -14,10 +14,6 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _BootstrapMixin = require('./BootstrapMixin');
-
-var _BootstrapMixin2 = _interopRequireDefault(_BootstrapMixin);
-
 var _utilsValidComponentChildren = require('./utils/ValidComponentChildren');
 
 var _utilsValidComponentChildren2 = _interopRequireDefault(_utilsValidComponentChildren);
@@ -26,10 +22,12 @@ var _Glyphicon = require('./Glyphicon');
 
 var _Glyphicon2 = _interopRequireDefault(_Glyphicon);
 
+var _utilsBootstrapUtils = require('./utils/bootstrapUtils');
+
+var _utilsBootstrapUtils2 = _interopRequireDefault(_utilsBootstrapUtils);
+
 var Carousel = _react2['default'].createClass({
   displayName: 'Carousel',
-
-  mixins: [_BootstrapMixin2['default']],
 
   propTypes: {
     slide: _react2['default'].PropTypes.bool,
@@ -49,6 +47,7 @@ var Carousel = _react2['default'].createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
+      bsClass: 'carousel',
       slide: true,
       interval: 5000,
       pauseOnHover: true,
@@ -160,10 +159,9 @@ var Carousel = _react2['default'].createClass({
   },
 
   render: function render() {
-    var classes = {
-      carousel: true,
-      slide: this.props.slide
-    };
+    var _classes;
+
+    var classes = (_classes = {}, _classes[_utilsBootstrapUtils2['default'].prefix(this.props)] = true, _classes.slide = this.props.slide, _classes);
 
     return _react2['default'].createElement(
       'div',
@@ -174,7 +172,10 @@ var Carousel = _react2['default'].createClass({
       this.props.indicators ? this.renderIndicators() : null,
       _react2['default'].createElement(
         'div',
-        { className: 'carousel-inner', ref: 'inner' },
+        {
+          ref: 'inner',
+          className: _utilsBootstrapUtils2['default'].prefix(this.props, 'inner')
+        },
         _utilsValidComponentChildren2['default'].map(this.props.children, this.renderItem)
       ),
       this.props.controls ? this.renderControls() : null
@@ -182,17 +183,21 @@ var Carousel = _react2['default'].createClass({
   },
 
   renderPrev: function renderPrev() {
+    var classes = 'left ' + _utilsBootstrapUtils2['default'].prefix(this.props, 'control');
+
     return _react2['default'].createElement(
       'a',
-      { className: 'left carousel-control', href: '#prev', key: 0, onClick: this.prev },
+      { className: classes, href: '#prev', key: 0, onClick: this.prev },
       this.props.prevIcon
     );
   },
 
   renderNext: function renderNext() {
+    var classes = 'right ' + _utilsBootstrapUtils2['default'].prefix(this.props, 'control');
+
     return _react2['default'].createElement(
       'a',
-      { className: 'right carousel-control', href: '#next', key: 1, onClick: this.next },
+      { className: classes, href: '#next', key: 1, onClick: this.next },
       this.props.nextIcon
     );
   },
@@ -218,9 +223,11 @@ var Carousel = _react2['default'].createClass({
   },
 
   renderIndicators: function renderIndicators() {
+    var _this = this;
+
     var indicators = [];
     _utilsValidComponentChildren2['default'].forEach(this.props.children, function (child, index) {
-      indicators.push(this.renderIndicator(child, index),
+      indicators.push(_this.renderIndicator(child, index),
 
       // Force whitespace between indicator elements, bootstrap
       // requires this for correct spacing of elements.
@@ -229,7 +236,7 @@ var Carousel = _react2['default'].createClass({
 
     return _react2['default'].createElement(
       'ol',
-      { className: 'carousel-indicators' },
+      { className: _utilsBootstrapUtils2['default'].prefix(this.props, 'indicators') },
       indicators
     );
   },
@@ -239,14 +246,16 @@ var Carousel = _react2['default'].createClass({
   },
 
   handleItemAnimateOutEnd: function handleItemAnimateOutEnd() {
+    var _this2 = this;
+
     this.setState({
       previousActiveIndex: null,
       direction: null
     }, function () {
-      this.waitForNext();
+      _this2.waitForNext();
 
-      if (this.props.onSlideEnd) {
-        this.props.onSlideEnd();
+      if (_this2.props.onSlideEnd) {
+        _this2.props.onSlideEnd();
       }
     });
   },

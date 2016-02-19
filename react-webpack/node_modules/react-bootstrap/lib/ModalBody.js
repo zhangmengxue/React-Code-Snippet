@@ -18,6 +18,10 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _utilsBootstrapUtils = require('./utils/bootstrapUtils');
+
+var _utilsBootstrapUtils2 = _interopRequireDefault(_utilsBootstrapUtils);
+
 var ModalBody = (function (_React$Component) {
   _inherits(ModalBody, _React$Component);
 
@@ -31,7 +35,7 @@ var ModalBody = (function (_React$Component) {
     return _react2['default'].createElement(
       'div',
       _extends({}, this.props, {
-        className: _classnames2['default'](this.props.className, this.props.modalClassName) }),
+        className: _classnames2['default'](this.props.className, _utilsBootstrapUtils2['default'].prefix(this.props, 'body')) }),
       this.props.children
     );
   };
@@ -39,16 +43,5 @@ var ModalBody = (function (_React$Component) {
   return ModalBody;
 })(_react2['default'].Component);
 
-ModalBody.propTypes = {
-  /**
-   * A css class applied to the Component
-   */
-  modalClassName: _react2['default'].PropTypes.string
-};
-
-ModalBody.defaultProps = {
-  modalClassName: 'modal-body'
-};
-
-exports['default'] = ModalBody;
+exports['default'] = _utilsBootstrapUtils.bsClass('modal', ModalBody);
 module.exports = exports['default'];

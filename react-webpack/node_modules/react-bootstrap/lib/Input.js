@@ -37,7 +37,7 @@ var Input = (function (_InputBase) {
 
   Input.prototype.render = function render() {
     if (this.props.type === 'static') {
-      _utilsDeprecationWarning2['default']('Input type=static', 'StaticText');
+      _utilsDeprecationWarning2['default']('Input type=static', 'FormControls.Static');
       return _react2['default'].createElement(FormControls.Static, this.props);
     }
 

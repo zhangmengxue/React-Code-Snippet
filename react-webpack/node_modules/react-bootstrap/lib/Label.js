@@ -1,5 +1,9 @@
 'use strict';
 
+var _inherits = require('babel-runtime/helpers/inherits')['default'];
+
+var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
+
 var _extends = require('babel-runtime/helpers/extends')['default'];
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
@@ -14,32 +18,36 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _BootstrapMixin = require('./BootstrapMixin');
+var _utilsBootstrapUtils = require('./utils/bootstrapUtils');
 
-var _BootstrapMixin2 = _interopRequireDefault(_BootstrapMixin);
+var _utilsBootstrapUtils2 = _interopRequireDefault(_utilsBootstrapUtils);
 
-var Label = _react2['default'].createClass({
-  displayName: 'Label',
+var _styleMaps = require('./styleMaps');
 
-  mixins: [_BootstrapMixin2['default']],
+var Label = (function (_React$Component) {
+  _inherits(Label, _React$Component);
 
-  getDefaultProps: function getDefaultProps() {
-    return {
-      bsClass: 'label',
-      bsStyle: 'default'
-    };
-  },
+  function Label() {
+    _classCallCheck(this, _Label);
 
-  render: function render() {
-    var classes = this.getBsClassSet();
+    _React$Component.apply(this, arguments);
+  }
+
+  Label.prototype.render = function render() {
+    var classes = _utilsBootstrapUtils2['default'].getClassSet(this.props);
 
     return _react2['default'].createElement(
       'span',
       _extends({}, this.props, { className: _classnames2['default'](this.props.className, classes) }),
       this.props.children
     );
-  }
-});
+  };
+
+  var _Label = Label;
+  Label = _utilsBootstrapUtils.bsStyles(_styleMaps.State.values().concat(_styleMaps.DEFAULT, _styleMaps.PRIMARY), _styleMaps.DEFAULT)(Label) || Label;
+  Label = _utilsBootstrapUtils.bsClass('label')(Label) || Label;
+  return Label;
+})(_react2['default'].Component);
 
 exports['default'] = Label;
 module.exports = exports['default'];

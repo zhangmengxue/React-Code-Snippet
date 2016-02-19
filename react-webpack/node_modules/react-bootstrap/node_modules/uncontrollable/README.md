@@ -10,7 +10,7 @@ npm i -S uncontrollable
 
 ### Usage
 
-uncontrollable `3.0.0` comes with two versions of the utility, the "classic" one and a version that uses batchedUpdates, which solves some bugs related to update order when used across multiple react roots, or "Portals". The batched version is teh recommended verion but it has one major caveat, since it uses an stateful addon, it _does not_ play well with global build that rely on an externalized react file, such as from a CDN. If you are having problems with the batching version just use the normal one, it almost certainly will work for you.
+uncontrollable `3.0.0` comes with two versions of the utility, the "classic" one and a version that uses `batchedUpdates`, which solves some bugs related to update order, when used across multiple react roots, or "Portals". The batched version is the recommended version but it has one __major caveat__, since it uses an stateful addon, it _does not_ play well with global builds that rely on an externalized react file, such as from a CDN. If you are having problems with the batching version just use the normal one, it almost certainly will work for you.
 
 ```js
 import classic from 'uncontrollable';
@@ -21,13 +21,14 @@ Both versions have the same API.
 
 ### API
 
-If you are a bit unsure on the _why_ of this module read the next section first. If you just want to see some real-world example, check out [React Widgets](https://github.com/jquense/react-widgets) which makes [heavy use of this strategy](https://github.com/jquense/react-widgets/blob/master/src/Multiselect.jsx#L418).
+If you are a bit unsure on the _why_ of this module read the next section first. If you just want to see some real-world example, check out [React Widgets](https://github.com/jquense/react-widgets) which makes [heavy use of this strategy](https://github.com/jquense/react-widgets/blob/5d1b530cb094cdc72f577fe01abe4a02dd265400/src/Multiselect.jsx#L521).
 
 
 #### `uncontrollable(Component, propHandlerHash, [methods])`
 
 - `Component`: is a valid react component, such as the result of `createClass`
 - `propHandlerHash`: define the pairs of prop/handlers you want to be uncontrollable eg. `{ value: 'onChange'}`
+- `methods`: since uncontrollable wraps your component in another component, methods are not immediately assessible. you can proxy them through by providing the names of the methods you want to continue to expose.
 
 For ever prop you indicate as uncontrollable, the returned component will also accept an initial, `default` value for that prop. For example, `open` can be left uncontrolled but the initial value can be set via `defaultOpen={true}` if we want it to start open.
 
@@ -68,7 +69,7 @@ One of the strengths of React is its extensibility model, enabled by a common pr
     )
   }
 ```
-This pattern moves the responsibility of managing the `value` from the input to its parent and mimics "two-way" databinding. Sometimes, however, there is no need for the parent to manage the input's state directly. In that case, all we want to do is set the initial `value` of the input and let the input manage it from then on. React deals with this through "uncontrolled" inputs, where if you don't indicate that you want to control the state of the input externally via a `value` prop it will just do the book keeping for you.
+This pattern moves the responsibility of managing the `value` from the input to its parent and mimics "two-way" databinding. Sometimes, however, there is no need for the parent to manage the input's state directly. In that case, all we want to do is set the initial `value` of the input and let the input manage it from then on. React deals with this through "uncontrolled" inputs, where if you don't indicate that you want to control the state of the input externally via a `value` prop it will just do the book-keeping for you.
 
 This is a great pattern which we can make use of in our own Components. It is often best to build each component to be as stateless as possible, assuming that the parent will want to control everything that makes sense. Take a simple Dropdown component as an example
 
@@ -106,9 +107,9 @@ var SimpleDropdown = React.createClass({
 
 Notice how we don't track any state in our simple dropdown? This is great because a consumer of our module will have the all the flexibility to decide what the behavior of the dropdown should be. Also notice our public API (propTypes), it consists of common pattern: a property we want set (`value`, `open`), and a set of handlers that indicate _when_ we want them set (`onChange`, `onToggle`). It is up to the parent component to change the `value` and `open` props in response to the handlers.
 
-While this pattern offers a excellent amount of flexibility to our consumers it also requires them to write a bunch of boilerplate code that probably won't change much from use to use. In all likelihood they will always want to set `open` in response to `onToggle`, and only in rare cases, want to override that behavior. This is where our controlled/uncontrolled pattern comes in.
+While this pattern offers a excellent amount of flexibility to consumers it also requires them to write a bunch of boilerplate code that probably won't change much from use to use. In all likelihood they will always want to set `open` in response to `onToggle`, and only in rare cases, want to override that behavior. This is where the controlled/uncontrolled pattern comes in.
 
-We want to just handle the open/onToggle case ourselves if the consumer doesn't provide a `open` prop (indicating that they want to control it). Rather than complicating our dropdown component with all that logic obsuring the business logic of our dropdown, we can add it later, by taking our dropdown and wrapping it inside another component that handles that for us.
+We want to just handle the open/onToggle case ourselves if the consumer doesn't provide a `open` prop (indicating that they want to control it). Rather than complicating our dropdown component with all that logic obscuring the business logic of our dropdown, we can add it later, by taking our dropdown and wrapping it inside another component that handles that for us.
 
 `uncontrollable` allows you separate out the logic necessary to create controlled/uncontrolled inputs letting you focus on creating a completely controlled input and wrapping it later. This tends to be a lot simplier to reason about as well.
 
@@ -123,7 +124,7 @@ We want to just handle the open/onToggle case ourselves if the consumer doesn't 
     <UncontrollableDropdown
       value={this.state.val} //we can still control these props if we want
       onChange={val => this.setState({ val })}
-      defaultopen={true} /> // or just let the UncontrollableDropdown handle it
+      defaultOpen={true} /> // or just let the UncontrollableDropdown handle it
                             // and we just set an initial value (or leave it out completely)!
 ```
 

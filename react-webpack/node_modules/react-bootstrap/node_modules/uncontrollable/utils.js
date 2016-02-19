@@ -4,6 +4,7 @@ exports.__esModule = true;
 exports.customPropType = customPropType;
 exports.uncontrolledPropTypes = uncontrolledPropTypes;
 exports.getType = getType;
+exports.getValue = getValue;
 exports.getLinkName = getLinkName;
 exports.defaultKey = defaultKey;
 exports.chain = chain;
@@ -23,7 +24,7 @@ var _invariant2 = _interopRequireDefault(_invariant);
 
 function customPropType(handler, propType, name) {
 
-  return function (props, propName, componentName) {
+  return function (props, propName) {
 
     if (props[propName] !== undefined) {
       if (!props[handler]) {
@@ -61,6 +62,18 @@ function getType(component) {
   if (version[0] === 0 && version[1] >= 13) return component;
 
   return component.type;
+}
+
+function getValue(props, name) {
+  var linkPropName = getLinkName(name);
+
+  if (linkPropName && !isProp(props, name) && isProp(props, linkPropName)) return props[linkPropName].value;
+
+  return props[name];
+}
+
+function isProp(props, prop) {
+  return props[prop] !== undefined;
 }
 
 function getLinkName(name) {

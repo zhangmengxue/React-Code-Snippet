@@ -9,6 +9,7 @@
 
 var path = require('path');
 var parent = require('glob-parent');
+var isGlob = require('is-glob');
 
 module.exports = function globBase(pattern) {
   if (typeof pattern !== 'string') {
@@ -17,7 +18,7 @@ module.exports = function globBase(pattern) {
 
   var res = {};
   res.base = parent(pattern);
-  res.isGlob = res.base !== pattern;
+  res.isGlob = isGlob(pattern);
 
   if (res.base !== '.') {
     res.glob = pattern.substr(res.base.length);

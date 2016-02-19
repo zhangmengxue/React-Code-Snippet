@@ -9,7 +9,6 @@ exports["default"] = function get(_x, _x2, _x3) {
     var object = _x,
         property = _x2,
         receiver = _x3;
-    desc = parent = getter = undefined;
     _again = false;
     if (object === null) object = Function.prototype;
 
@@ -25,6 +24,7 @@ exports["default"] = function get(_x, _x2, _x3) {
         _x2 = property;
         _x3 = receiver;
         _again = true;
+        desc = parent = undefined;
         continue _function;
       }
     } else if ("value" in desc) {

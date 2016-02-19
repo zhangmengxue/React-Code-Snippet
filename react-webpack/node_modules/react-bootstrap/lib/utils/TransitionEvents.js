@@ -59,6 +59,7 @@ function detectEvents() {
   }
 
   for (var baseEventName in EVENT_NAME_MAP) {
+    // eslint-disable-line guard-for-in
     var baseEvents = EVENT_NAME_MAP[baseEventName];
     for (var styleName in baseEvents) {
       if (styleName in style) {

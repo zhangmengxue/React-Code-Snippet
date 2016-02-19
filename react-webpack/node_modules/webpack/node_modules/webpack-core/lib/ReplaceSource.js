@@ -31,10 +31,21 @@ ReplaceSource.prototype.source = function(options) {
 	return this._replaceString(this._source.source());
 };
 
-ReplaceSource.prototype._replaceString = function(str) {
-	this.replacements.sort(function(a, b) {
-		return b[1] - a[1];
+ReplaceSource.prototype._sortReplacements = function() {
+	this.replacements.forEach(function(item, idx) {
+		item[3] = idx;
 	});
+	this.replacements.sort(function(a, b) {
+		var diff = b[1] - a[1];
+		if(diff !== 0)
+			return diff;
+		return b[3] - a[3];
+	});
+
+};
+
+ReplaceSource.prototype._replaceString = function(str) {
+	this._sortReplacements();
 	var result = [str];
 	this.replacements.forEach(function(repl) {
 		var remSource = result.pop();
@@ -49,9 +60,7 @@ ReplaceSource.prototype._replaceString = function(str) {
 require("./SourceAndMapMixin")(ReplaceSource.prototype);
 
 ReplaceSource.prototype.node = function(options) {
-	this.replacements.sort(function(a, b) {
-		return b[1] - a[1];
-	});
+	this._sortReplacements();
 	var result = [this._source.node(options)];
 	this.replacements.forEach(function(repl) {
 		var remSource = result.pop();
