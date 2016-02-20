@@ -105,8 +105,8 @@ Let's refactor our app to use React Router.
 import React from 'react'
 import { render } from 'react-dom'
 
-// First we import some components...
-import { Router, Route, Link } from 'react-router'
+// First we import some modules...
+import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router'
 
 // Then we delete a bunch of code from App and
 // add some <Link> elements...
@@ -134,8 +134,9 @@ const App = React.createClass({
 // Finally, we render a <Router> with some <Route>s.
 // It does all the fancy routing stuff for us.
 render((
-  <Router>
+  <Router history={hashHistory}>
     <Route path="/" component={App}>
+      <IndexRoute component={Home} />
       <Route path="about" component={About} />
       <Route path="inbox" component={Inbox} />
     </Route>
@@ -151,13 +152,14 @@ Internally, the router converts your `<Route>` element hierarchy to a [route con
 const routes = {
   path: '/',
   component: App,
+  indexRoute: { component: Home },
   childRoutes: [
     { path: 'about', component: About },
     { path: 'inbox', component: Inbox },
   ]
 }
 
-render(<Router routes={routes} />, document.body)
+render(<Router history={history} routes={routes} />, document.body)
 ```
 
 ## Adding More UI
@@ -185,8 +187,9 @@ const Inbox = React.createClass({
 })
 
 render((
-  <Router>
+  <Router history={history}>
     <Route path="/" component={App}>
+      <IndexRoute component={Home} />
       <Route path="about" component={About} />
       <Route path="inbox" component={Inbox}>
         {/* add some nested routes where we want the UI to nest */}
@@ -205,7 +208,7 @@ Now visits to URLs like `inbox/messages/Jkei3c32` will match the new route and b
 ```
 <App>
   <Inbox>
-    <Message params={ {id: 'Jkei3c32'} } />
+    <Message params={{ id: 'Jkei3c32' }}/>
   </Inbox>
 </App>
 ```
@@ -215,7 +218,7 @@ And visits to `/inbox` will build this:
 ```
 <App>
   <Inbox>
-    <InboxStats />
+    <InboxStats/>
   </Inbox>
 </App>
 ```
@@ -242,7 +245,7 @@ const Message = React.createClass({
 })
 ```
 
-You can also access parameters from the query string. If you for instance visit `/foo?bar=baz`, you can access `this.props.location.query.bar` to get the value `"baz"` from your Route component.
+You can also access parameters from the query string. For instance, if you're on `/foo?bar=baz`, you can access `this.props.location.query.bar` to get the value `"baz"` from your Route component.
 
 That's the gist of React Router. Application UIs are boxes inside of boxes inside of boxes; now you can keep those boxes in sync with the URL and link to them easily.
 

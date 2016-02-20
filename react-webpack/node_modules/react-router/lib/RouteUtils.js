@@ -15,9 +15,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _warning = require('warning');
+var _routerWarning = require('./routerWarning');
 
-var _warning2 = _interopRequireDefault(_warning);
+var _routerWarning2 = _interopRequireDefault(_routerWarning);
 
 function isValidChild(object) {
   return object == null || _react2['default'].isValidElement(object);
@@ -35,7 +35,7 @@ function checkPropTypes(componentName, propTypes, props) {
       var error = propTypes[propName](props, propName, componentName);
 
       /* istanbul ignore if: error logging */
-      if (error instanceof Error) process.env.NODE_ENV !== 'production' ? _warning2['default'](false, error.message) : undefined;
+      if (error instanceof Error) process.env.NODE_ENV !== 'production' ? _routerWarning2['default'](false, error.message) : undefined;
     }
   }
 }

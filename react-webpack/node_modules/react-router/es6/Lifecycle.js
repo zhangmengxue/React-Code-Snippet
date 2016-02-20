@@ -1,5 +1,6 @@
 'use strict';
 
+import warning from './routerWarning';
 import React from 'react';
 import invariant from 'invariant';
 
@@ -36,6 +37,7 @@ var Lifecycle = {
   },
 
   componentDidMount: function componentDidMount() {
+    process.env.NODE_ENV !== 'production' ? warning(false, 'the `Lifecycle` mixin is deprecated, please use `context.router.setRouteLeaveHook(route, hook)`. http://tiny.cc/router-lifecyclemixin') : undefined;
     !this.routerWillLeave ? process.env.NODE_ENV !== 'production' ? invariant(false, 'The Lifecycle mixin requires you to define a routerWillLeave method') : invariant(false) : undefined;
 
     var route = this.props.route || this.context.route;

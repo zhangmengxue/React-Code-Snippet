@@ -4,7 +4,13 @@ exports.__esModule = true;
 exports.runEnterHooks = runEnterHooks;
 exports.runLeaveHooks = runLeaveHooks;
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
 var _AsyncUtils = require('./AsyncUtils');
+
+var _routerWarning = require('./routerWarning');
+
+var _routerWarning2 = _interopRequireDefault(_routerWarning);
 
 function createEnterHook(hook, route) {
   return function (a, b, callback) {
@@ -28,9 +34,9 @@ function getEnterHooks(routes) {
 
 /**
  * Runs all onEnter hooks in the given array of routes in order
- * with onEnter(nextState, replaceState, callback) and calls
+ * with onEnter(nextState, replace, callback) and calls
  * callback(error, redirectInfo) when finished. The first hook
- * to use replaceState short-circuits the loop.
+ * to use replace short-circuits the loop.
  *
  * If a hook needs to run asynchronously, it may use the callback
  * function. However, doing so will cause the transition to pause,
@@ -46,12 +52,23 @@ function runEnterHooks(routes, nextState, callback) {
   }
 
   var redirectInfo = undefined;
-  function replaceState(state, pathname, query) {
-    redirectInfo = { pathname: pathname, query: query, state: state };
+  function replace(location, deprecatedPathname, deprecatedQuery) {
+    if (deprecatedPathname) {
+      process.env.NODE_ENV !== 'production' ? _routerWarning2['default'](false, '`replaceState(state, pathname, query) is deprecated; use `replace(location)` with a location descriptor instead. http://tiny.cc/router-isActivedeprecated') : undefined;
+      redirectInfo = {
+        pathname: deprecatedPathname,
+        query: deprecatedQuery,
+        state: location
+      };
+
+      return;
+    }
+
+    redirectInfo = location;
   }
 
   _AsyncUtils.loopAsync(hooks.length, function (index, next, done) {
-    hooks[index](nextState, replaceState, function (error) {
+    hooks[index](nextState, replace, function (error) {
       if (error || redirectInfo) {
         done(error, redirectInfo); // No need to continue.
       } else {

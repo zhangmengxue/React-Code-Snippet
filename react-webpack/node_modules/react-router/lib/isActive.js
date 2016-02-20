@@ -1,6 +1,7 @@
 'use strict';
 
 exports.__esModule = true;
+exports['default'] = isActive;
 
 var _PatternUtils = require('./PatternUtils');
 
@@ -111,13 +112,16 @@ function queryIsActive(query, activeQuery) {
  * Returns true if a <Link> to the given pathname/query combination is
  * currently active.
  */
-function isActive(pathname, query, indexOnly, location, routes, params) {
-  if (location == null) return false;
+
+function isActive(_ref, indexOnly, currentLocation, routes, params) {
+  var pathname = _ref.pathname;
+  var query = _ref.query;
+
+  if (currentLocation == null) return false;
 
   if (!routeIsActive(pathname, routes, params, indexOnly)) return false;
 
-  return queryIsActive(query, location.query);
+  return queryIsActive(query, currentLocation.query);
 }
 
-exports['default'] = isActive;
 module.exports = exports['default'];

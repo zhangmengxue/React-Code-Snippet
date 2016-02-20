@@ -4,17 +4,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-import warning from 'warning';
-import React, { Component } from 'react';
 import createHashHistory from 'history/lib/createHashHistory';
-import { createRoutes } from './RouteUtils';
-import RoutingContext from './RoutingContext';
-import useRoutes from './useRoutes';
+import useQueries from 'history/lib/useQueries';
+import React from 'react';
+
+import createTransitionManager from './createTransitionManager';
 import { routes } from './PropTypes';
+import RouterContext from './RouterContext';
+import { createRoutes } from './RouteUtils';
+import { createRouterObject, createRoutingHistory } from './RouterUtils';
+import warning from './routerWarning';
+
+function isDeprecatedHistory(history) {
+  return !history || !history.__v2_compatible__;
+}
 
 var _React$PropTypes = React.PropTypes;
 var func = _React$PropTypes.func;
@@ -22,87 +25,142 @@ var object = _React$PropTypes.object;
 
 /**
  * A <Router> is a high-level API for automatically setting up
- * a router that renders a <RoutingContext> with all the props
+ * a router that renders a <RouterContext> with all the props
  * it needs each time the URL changes.
  */
+var Router = React.createClass({
+  displayName: 'Router',
 
-var Router = (function (_Component) {
-  _inherits(Router, _Component);
+  propTypes: {
+    history: object,
+    children: routes,
+    routes: routes, // alias for children
+    render: func,
+    createElement: func,
+    onError: func,
+    onUpdate: func,
 
-  function Router(props, context) {
-    _classCallCheck(this, Router);
+    // PRIVATE: For client-side rehydration of server match.
+    matchContext: object
+  },
 
-    _Component.call(this, props, context);
+  getDefaultProps: function getDefaultProps() {
+    return {
+      render: function render(props) {
+        return React.createElement(RouterContext, props);
+      }
+    };
+  },
 
-    this.state = {
+  getInitialState: function getInitialState() {
+    return {
       location: null,
       routes: null,
       params: null,
       components: null
     };
-  }
+  },
 
-  Router.prototype.handleError = function handleError(error) {
+  handleError: function handleError(error) {
     if (this.props.onError) {
       this.props.onError.call(this, error);
     } else {
       // Throw errors by default so we don't silently swallow them!
       throw error; // This error probably occurred in getChildRoutes or getComponents.
     }
-  };
+  },
 
-  Router.prototype.componentWillMount = function componentWillMount() {
+  componentWillMount: function componentWillMount() {
     var _this = this;
 
     var _props = this.props;
-    var history = _props.history;
-    var children = _props.children;
-    var routes = _props.routes;
     var parseQueryString = _props.parseQueryString;
     var stringifyQuery = _props.stringifyQuery;
 
-    var createHistory = history ? function () {
-      return history;
-    } : createHashHistory;
+    process.env.NODE_ENV !== 'production' ? warning(!(parseQueryString || stringifyQuery), '`parseQueryString` and `stringifyQuery` are deprecated. Please create a custom history. http://tiny.cc/router-customquerystring') : undefined;
 
-    this.history = useRoutes(createHistory)({
-      routes: createRoutes(routes || children),
-      parseQueryString: parseQueryString,
-      stringifyQuery: stringifyQuery
-    });
+    var _createRouterObjects = this.createRouterObjects();
 
-    this._unlisten = this.history.listen(function (error, state) {
+    var history = _createRouterObjects.history;
+    var transitionManager = _createRouterObjects.transitionManager;
+    var router = _createRouterObjects.router;
+
+    this._unlisten = transitionManager.listen(function (error, state) {
       if (error) {
         _this.handleError(error);
       } else {
         _this.setState(state, _this.props.onUpdate);
       }
     });
-  };
+
+    this.history = history;
+    this.router = router;
+  },
+
+  createRouterObjects: function createRouterObjects() {
+    var matchContext = this.props.matchContext;
+
+    if (matchContext) {
+      return matchContext;
+    }
+
+    var history = this.props.history;
+    var _props2 = this.props;
+    var routes = _props2.routes;
+    var children = _props2.children;
+
+    if (isDeprecatedHistory(history)) {
+      history = this.wrapDeprecatedHistory(history);
+    }
+
+    var transitionManager = createTransitionManager(history, createRoutes(routes || children));
+    var router = createRouterObject(history, transitionManager);
+    var routingHistory = createRoutingHistory(history, transitionManager);
+
+    return { history: routingHistory, transitionManager: transitionManager, router: router };
+  },
+
+  wrapDeprecatedHistory: function wrapDeprecatedHistory(history) {
+    var _props3 = this.props;
+    var parseQueryString = _props3.parseQueryString;
+    var stringifyQuery = _props3.stringifyQuery;
+
+    var createHistory = undefined;
+    if (history) {
+      process.env.NODE_ENV !== 'production' ? warning(false, 'It appears you have provided a deprecated history object to `<Router/>`, please use a history provided by ' + 'React Router with `import { browserHistory } from \'react-router\'` or `import { hashHistory } from \'react-router\'`. ' + 'If you are using a custom history please create it with `useRouterHistory`, see http://tiny.cc/router-usinghistory for details.') : undefined;
+      createHistory = function () {
+        return history;
+      };
+    } else {
+      process.env.NODE_ENV !== 'production' ? warning(false, '`Router` no longer defaults the history prop to hash history. Please use the `hashHistory` singleton instead. http://tiny.cc/router-defaulthistory') : undefined;
+      createHistory = createHashHistory;
+    }
+
+    return useQueries(createHistory)({ parseQueryString: parseQueryString, stringifyQuery: stringifyQuery });
+  },
 
   /* istanbul ignore next: sanity check */
-
-  Router.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
     process.env.NODE_ENV !== 'production' ? warning(nextProps.history === this.props.history, 'You cannot change <Router history>; it will be ignored') : undefined;
 
     process.env.NODE_ENV !== 'production' ? warning((nextProps.routes || nextProps.children) === (this.props.routes || this.props.children), 'You cannot change <Router routes>; it will be ignored') : undefined;
-  };
+  },
 
-  Router.prototype.componentWillUnmount = function componentWillUnmount() {
+  componentWillUnmount: function componentWillUnmount() {
     if (this._unlisten) this._unlisten();
-  };
+  },
 
-  Router.prototype.render = function render() {
+  render: function render() {
     var _state = this.state;
     var location = _state.location;
     var routes = _state.routes;
     var params = _state.params;
     var components = _state.components;
-    var _props2 = this.props;
-    var RoutingContext = _props2.RoutingContext;
-    var createElement = _props2.createElement;
+    var _props4 = this.props;
+    var createElement = _props4.createElement;
+    var render = _props4.render;
 
-    var props = _objectWithoutProperties(_props2, ['RoutingContext', 'createElement']);
+    var props = _objectWithoutProperties(_props4, ['createElement', 'render']);
 
     if (location == null) return null; // Async match
 
@@ -112,33 +170,17 @@ var Router = (function (_Component) {
       return delete props[propType];
     });
 
-    return React.createElement(RoutingContext, _extends({}, props, {
+    return render(_extends({}, props, {
       history: this.history,
-      createElement: createElement,
+      router: this.router,
       location: location,
       routes: routes,
       params: params,
-      components: components
+      components: components,
+      createElement: createElement
     }));
-  };
+  }
 
-  return Router;
-})(Component);
-
-Router.propTypes = {
-  history: object,
-  children: routes,
-  routes: routes, // alias for children
-  RoutingContext: func.isRequired,
-  createElement: func,
-  onError: func,
-  onUpdate: func,
-  parseQueryString: func,
-  stringifyQuery: func
-};
-
-Router.defaultProps = {
-  RoutingContext: RoutingContext
-};
+});
 
 export default Router;

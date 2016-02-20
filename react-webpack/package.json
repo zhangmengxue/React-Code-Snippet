@@ -37,7 +37,7 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-kendo": "~0.13.11",
-    "react-router": "^1.0.0",
+    "react-router": "^2.0.0",
     "recluster": "~0.3.7"
   }
 }

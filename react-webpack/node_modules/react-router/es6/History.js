@@ -1,5 +1,6 @@
 'use strict';
 
+import warning from './routerWarning';
 import { history } from './PropTypes';
 
 /**
@@ -12,6 +13,7 @@ var History = {
   },
 
   componentWillMount: function componentWillMount() {
+    process.env.NODE_ENV !== 'production' ? warning(false, 'the `History` mixin is deprecated, please access `context.router` with your own `contextTypes`. http://tiny.cc/router-historymixin') : undefined;
     this.history = this.context.history;
   }
 

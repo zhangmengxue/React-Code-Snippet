@@ -81,6 +81,12 @@ var _RouteUtils = require('./RouteUtils');
 
 exports.createRoutes = _RouteUtils.createRoutes;
 
+var _RouterContext2 = require('./RouterContext');
+
+var _RouterContext3 = _interopRequireDefault(_RouterContext2);
+
+exports.RouterContext = _RouterContext3['default'];
+
 var _RoutingContext2 = require('./RoutingContext');
 
 var _RoutingContext3 = _interopRequireDefault(_RoutingContext2);
@@ -99,6 +105,32 @@ var _match3 = _interopRequireDefault(_match2);
 
 exports.match = _match3['default'];
 
-var _Router4 = _interopRequireDefault(_Router2);
+var _useRouterHistory2 = require('./useRouterHistory');
 
-exports['default'] = _Router4['default'];
+var _useRouterHistory3 = _interopRequireDefault(_useRouterHistory2);
+
+exports.useRouterHistory = _useRouterHistory3['default'];
+
+var _PatternUtils = require('./PatternUtils');
+
+exports.formatPattern = _PatternUtils.formatPattern;
+
+/* histories */
+
+var _browserHistory2 = require('./browserHistory');
+
+var _browserHistory3 = _interopRequireDefault(_browserHistory2);
+
+exports.browserHistory = _browserHistory3['default'];
+
+var _hashHistory2 = require('./hashHistory');
+
+var _hashHistory3 = _interopRequireDefault(_hashHistory2);
+
+exports.hashHistory = _hashHistory3['default'];
+
+var _createMemoryHistory2 = require('./createMemoryHistory');
+
+var _createMemoryHistory3 = _interopRequireDefault(_createMemoryHistory2);
+
+exports.createMemoryHistory = _createMemoryHistory3['default'];

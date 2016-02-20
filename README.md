@@ -12,7 +12,7 @@
   - 实现的React官方的入门例子，commentbox
 
 **[/react-webpack](https://github.com/zhangmengxue/React-Learning/tree/master/react-webpack)**
-  - 这个里面用的是旧版本的react-router。不再更新。
+  - 2016/02/20 更新为使用v2.0.0版本的react-router。
   - 里面包含很多结合使用ES6和React的小例子。也是 [React+Webpack+ES6开发模式入门指南](http://www.cnblogs.com/skylar/p/React-Webpack-ES6.html) 这篇文章的实例
 
 **[/react-notebook](https://github.com/zhangmengxue/React-Learning/tree/master/react-notebook)**

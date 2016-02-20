@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { render } from 'react-dom';
-import { Router, Link, Route } from 'react-router';
+import { Router, Link, Route ,browserHistory} from 'react-router';
 
 import HelloHandler from './hello.js';
 // import Forms from './form.js';
@@ -12,21 +12,22 @@ let App = React.createClass({
   render() {
     return (
       <div className="nav">
-        <Link to="app" className="homelink">Home  </Link>
-        <Link to="hello" className="hellolink">Say Hello</Link>
-        <RouteHandler/>
+        <Link to="/hello" className="hellolink">Say Hello</Link>
+        <Link to="/timer" className="timerlink">Timer</Link>
+        {this.props.children}
       </div>
     );
   }
 });
 
-let routes = (
-    <Route path="app" component={App}>
-      <Route path="hello" component={HelloHandler}/>
-    </Route>
-);
 
-render(<Router routes={routes} />, document.getElementById('content'));
+render(
+  (<Router history={browserHistory}>
+    <Route path="/" component={App}>
+      <Route path="/hello" component={HelloHandler} />
+      <Route path="/timer" component={Timer} />
+    </Route>
+  </Router>), document.getElementById('content'));
 
 
 

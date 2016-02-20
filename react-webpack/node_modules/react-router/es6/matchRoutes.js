@@ -1,20 +1,33 @@
 'use strict';
 
-import warning from 'warning';
+import warning from './routerWarning';
 import { loopAsync } from './AsyncUtils';
 import { matchPattern } from './PatternUtils';
 import { createRoutes } from './RouteUtils';
 
 function getChildRoutes(route, location, callback) {
   if (route.childRoutes) {
-    callback(null, route.childRoutes);
-  } else if (route.getChildRoutes) {
-    route.getChildRoutes(location, function (error, childRoutes) {
-      callback(error, !error && createRoutes(childRoutes));
-    });
-  } else {
-    callback();
+    return [null, route.childRoutes];
   }
+  if (!route.getChildRoutes) {
+    return [];
+  }
+
+  var sync = true,
+      result = undefined;
+
+  route.getChildRoutes(location, function (error, childRoutes) {
+    childRoutes = !error && createRoutes(childRoutes);
+    if (sync) {
+      result = [error, childRoutes];
+      return;
+    }
+
+    callback(error, childRoutes);
+  });
+
+  sync = false;
+  return result; // Might be undefined.
 }
 
 function getIndexRoute(route, location, callback) {
@@ -122,7 +135,7 @@ function matchRouteDeep(route, location, remainingPathname, paramNames, paramVal
     // Either a) this route matched at least some of the path or b)
     // we don't have to load this route's children asynchronously. In
     // either case continue checking for matches in the subtree.
-    getChildRoutes(route, location, function (error, childRoutes) {
+    var onChildRoutes = function onChildRoutes(error, childRoutes) {
       if (error) {
         callback(error);
       } else if (childRoutes) {
@@ -141,7 +154,12 @@ function matchRouteDeep(route, location, remainingPathname, paramNames, paramVal
       } else {
         callback();
       }
-    });
+    };
+
+    var result = getChildRoutes(route, location, onChildRoutes);
+    if (result) {
+      onChildRoutes.apply(undefined, result);
+    }
   } else {
     callback();
   }

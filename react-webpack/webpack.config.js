@@ -1,5 +1,4 @@
 var webpack = require('webpack');
-var HtmlwebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: [
@@ -35,9 +34,6 @@ module.exports = {
     },
     plugins: [
       new webpack.NoErrorsPlugin(),
-      new webpack.HotModuleReplacementPlugin(),
-      new HtmlwebpackPlugin({
-        title: 'React Demo'
-        })
+      new webpack.HotModuleReplacementPlugin()
     ]
 };

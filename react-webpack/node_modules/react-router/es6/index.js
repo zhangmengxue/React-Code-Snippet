@@ -31,11 +31,23 @@ import _useRoutes from './useRoutes';
 export { _useRoutes as useRoutes };
 
 export { createRoutes } from './RouteUtils';
+import _RouterContext from './RouterContext';
+export { _RouterContext as RouterContext };
 import _RoutingContext from './RoutingContext';
 export { _RoutingContext as RoutingContext };
 import _PropTypes from './PropTypes';
 export { _PropTypes as PropTypes };
 import _match from './match';
 export { _match as match };
-import _default from './Router';
-export { _default as default };
+import _useRouterHistory from './useRouterHistory';
+export { _useRouterHistory as useRouterHistory };
+
+export { formatPattern } from './PatternUtils';
+
+/* histories */
+import _browserHistory from './browserHistory';
+export { _browserHistory as browserHistory };
+import _hashHistory from './hashHistory';
+export { _hashHistory as hashHistory };
+import _createMemoryHistory from './createMemoryHistory';
+export { _createMemoryHistory as createMemoryHistory };

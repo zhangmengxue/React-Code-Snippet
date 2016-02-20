@@ -4,17 +4,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-import React, { Component } from 'react';
+import React from 'react';
+import warning from './routerWarning';
 
 var _React$PropTypes = React.PropTypes;
 var bool = _React$PropTypes.bool;
 var object = _React$PropTypes.object;
 var string = _React$PropTypes.string;
 var func = _React$PropTypes.func;
+var oneOfType = _React$PropTypes.oneOfType;
 
 function isLeftClickEvent(event) {
   return event.button === 0;
@@ -30,10 +28,22 @@ function isEmptyObject(object) {
   }return true;
 }
 
+function createLocationDescriptor(to, _ref) {
+  var query = _ref.query;
+  var hash = _ref.hash;
+  var state = _ref.state;
+
+  if (query || hash || state) {
+    return { pathname: to, query: query, hash: hash, state: state };
+  }
+
+  return to;
+}
+
 /**
  * A <Link> is used to create an <a> element that links to a route.
  * When that route is active, the link gets the value of its
- * `activeClassName` prop
+ * activeClassName prop.
  *
  * For example, assuming you have the following route:
  *
@@ -48,17 +58,33 @@ function isEmptyObject(object) {
  *
  *   <Link ... query={{ show: true }} state={{ the: 'state' }} />
  */
+var Link = React.createClass({
+  displayName: 'Link',
 
-var Link = (function (_Component) {
-  _inherits(Link, _Component);
+  contextTypes: {
+    router: object
+  },
 
-  function Link() {
-    _classCallCheck(this, Link);
+  propTypes: {
+    to: oneOfType([string, object]).isRequired,
+    query: object,
+    hash: string,
+    state: object,
+    activeStyle: object,
+    activeClassName: string,
+    onlyActiveOnIndex: bool.isRequired,
+    onClick: func
+  },
 
-    _Component.apply(this, arguments);
-  }
+  getDefaultProps: function getDefaultProps() {
+    return {
+      onlyActiveOnIndex: false,
+      className: '',
+      style: {}
+    };
+  },
 
-  Link.prototype.handleClick = function handleClick(event) {
+  handleClick: function handleClick(event) {
     var allowTransition = true;
 
     if (this.props.onClick) this.props.onClick(event);
@@ -79,20 +105,18 @@ var Link = (function (_Component) {
 
     if (allowTransition) {
       var _props = this.props;
-      var state = _props.state;
       var to = _props.to;
       var query = _props.query;
       var hash = _props.hash;
+      var state = _props.state;
 
-      if (hash) to += hash;
+      var _location = createLocationDescriptor(to, { query: query, hash: hash, state: state });
 
-      this.context.history.pushState(state, to, query);
+      this.context.router.push(_location);
     }
-  };
+  },
 
-  Link.prototype.render = function render() {
-    var _this = this;
-
+  render: function render() {
     var _props2 = this.props;
     var to = _props2.to;
     var query = _props2.query;
@@ -104,21 +128,17 @@ var Link = (function (_Component) {
 
     var props = _objectWithoutProperties(_props2, ['to', 'query', 'hash', 'state', 'activeClassName', 'activeStyle', 'onlyActiveOnIndex']);
 
-    // Manually override onClick.
-    props.onClick = function (e) {
-      return _this.handleClick(e);
-    };
+    process.env.NODE_ENV !== 'production' ? warning(!(query || hash || state), 'the `query`, `hash`, and `state` props on `<Link>` are deprecated, use `<Link to={{ pathname, query, hash, state }}/>. http://tiny.cc/router-isActivedeprecated') : undefined;
 
-    // Ignore if rendered outside the context of history, simplifies unit testing.
-    var history = this.context.history;
+    // Ignore if rendered outside the context of router, simplifies unit testing.
+    var router = this.context.router;
 
-    if (history) {
-      props.href = history.createHref(to, query);
-
-      if (hash) props.href += hash;
+    if (router) {
+      var _location2 = createLocationDescriptor(to, { query: query, hash: hash, state: state });
+      props.href = router.createHref(_location2);
 
       if (activeClassName || activeStyle != null && !isEmptyObject(activeStyle)) {
-        if (history.isActive(to, query, onlyActiveOnIndex)) {
+        if (router.isActive(_location2, onlyActiveOnIndex)) {
           if (activeClassName) props.className += props.className === '' ? activeClassName : ' ' + activeClassName;
 
           if (activeStyle) props.style = _extends({}, props.style, activeStyle);
@@ -126,31 +146,9 @@ var Link = (function (_Component) {
       }
     }
 
-    return React.createElement('a', props);
-  };
+    return React.createElement('a', _extends({}, props, { onClick: this.handleClick }));
+  }
 
-  return Link;
-})(Component);
-
-Link.contextTypes = {
-  history: object
-};
-
-Link.propTypes = {
-  to: string.isRequired,
-  query: object,
-  hash: string,
-  state: object,
-  activeStyle: object,
-  activeClassName: string,
-  onlyActiveOnIndex: bool.isRequired,
-  onClick: func
-};
-
-Link.defaultProps = {
-  onlyActiveOnIndex: false,
-  className: '',
-  style: {}
-};
+});
 
 export default Link;

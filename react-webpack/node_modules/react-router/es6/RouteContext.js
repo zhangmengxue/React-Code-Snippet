@@ -1,5 +1,6 @@
 'use strict';
 
+import warning from './routerWarning';
 import React from 'react';
 
 var object = React.PropTypes.object;
@@ -24,6 +25,10 @@ var RouteContext = {
     return {
       route: this.props.route
     };
+  },
+
+  componentWillMount: function componentWillMount() {
+    process.env.NODE_ENV !== 'production' ? warning(false, 'The `RouteContext` mixin is deprecated. You can provide `this.props.route` on context with your own `contextTypes`. http://tiny.cc/router-routecontextmixin') : undefined;
   }
 
 };
