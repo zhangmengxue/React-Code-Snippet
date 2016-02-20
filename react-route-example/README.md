@@ -1,18 +1,7 @@
-React Router Tutorial
+React Router Learning DEMO
 =====================
 
-Quick lessons for getting up-to-speed with React Router.
+来自[React router 官方教程](https://github.com/reactjs/react-router-tutorial/blob/start/lessons/01-setting-up.md)
 
-See [01-setting-up.md](/lessons/01-setting-up.md) to get started.
 
-Each lesson has a commit for the final code so you can `git checkout
-<previous lesson final sha>` before starting a new one if you'd like.
-
-Missing stuff that will come eventually, hopefully ... maybe.
-
-1. an app that isn't completely pointless
-- egghead.io videos
-- code splitting
-- location state
-- data integration
 

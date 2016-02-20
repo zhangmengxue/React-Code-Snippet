@@ -12,7 +12,7 @@
   - 实现的React官方的入门例子，commentbox
 
 **[/react-webpack](https://github.com/zhangmengxue/React-Learning/tree/master/react-webpack)**
-
+  - 这个里面用的是旧版本的react-router。不再更新。
   - 里面包含很多结合使用ES6和React的小例子。也是 [React+Webpack+ES6开发模式入门指南](http://www.cnblogs.com/skylar/p/React-Webpack-ES6.html) 这篇文章的实例
 
 **[/react-notebook](https://github.com/zhangmengxue/React-Learning/tree/master/react-notebook)**
@@ -22,6 +22,10 @@
 **[/simple-flux](https://github.com/zhangmengxue/React-Learning/tree/master/simple-flux)**
 
   - flux入门实例，理解flux。flux-for-stupid-people这篇文章的实例[flux-for-stupid-people-demo](https://github.com/ruanyf/flux-for-stupid-people-demo)
+
+**[/react-route-example](https://github.com/zhangmengxue/React-Learning/tree/master/react-route-example)**
+
+  - React-Router DEMO ,来自[React router 官方教程](https://github.com/reactjs/react-router-tutorial/blob/start/lessons/01-setting-up.md)
 
 
 **Resources:**
