@@ -28,6 +28,10 @@
   - React-Router DEMO ,来自[React router 官方教程](https://github.com/reactjs/react-router-tutorial/blob/start/lessons/01-setting-up.md)
 **[react-server-example](https://github.com/mhart/react-server-example)**
 
+**[redux demo](http://redux.js.org/docs/introduction/Examples.html#counter-vanilla)**
+
+**[Redux-Tutorial](https://github.com/happypoulp/redux-tutorial)**
+
 
 **Resources:**
 
