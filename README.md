@@ -46,6 +46,7 @@
 - [深入浅出React-Webpack](http://www.infoq.com/cn/articles/react-and-webpack)
 - [ruanyf-reactdemos](https://github.com/ruanyf/react-demos)
 - [flux-for-stupid-people](http://blog.andrewray.me/flux-for-stupid-people/)
+- [understand-redux](http://www.youhavetolearncomputers.com/blog/2015/9/15/a-conceptual-overview-of-redux-or-how-i-fell-in-love-with-a-javascript-state-container)
 
 **Others**
 
